@@ -18,6 +18,8 @@ class Product extends Component {
     ]
   };
 
+  onElementClick = (element) => console.log('element clicked: ', element);
+
   handleChange = (e, { checked, value }) => {
     const nextCheckboxes = this.state.checkedCheckboxes;
     nextCheckboxes[value] = checked;
@@ -44,7 +46,7 @@ class Product extends Component {
     return (
       <div className="product">
         <div className="product-content-container">
-          <Chart data={this.state.chartData} />
+          <Chart data={this.state.chartData} onElementClick={this.onElementClick} />
         </div>
       </div>
     );
