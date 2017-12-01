@@ -2,7 +2,15 @@
 
 }
 
+.product-title {
+
+}
+
+.product-content-container {
+    margin-left: 15rem;
+    padding: 4rem;
+}
+
 .chart-canvas {
-    margin-left: 250px;
-    padding: 1em;
+
 }
