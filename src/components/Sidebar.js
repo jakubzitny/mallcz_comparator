@@ -46,6 +46,10 @@ class Sidebar extends Component {
     setTimeout(() => {
       const now = Date.now()
       if (now - this.state.timestamp > 200) {
+        console.log('calling S', now - this.state.timestamp)
+        this.setState({
+          timestamp: null,
+        });
         this.props.onParamChange(sliders)
       }
     }, 200)
