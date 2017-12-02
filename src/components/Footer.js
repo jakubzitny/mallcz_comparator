@@ -5,9 +5,6 @@ export default class Footer extends Component {
   render() {
     return (
       <div className="footwrapper">
-        <br />
-        <br />
-        <br />
         <div className="foot-left">
         <h3>Accessories</h3>
         {

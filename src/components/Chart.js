@@ -1,10 +1,27 @@
+import debounce from 'lodash/debounce'
+
 import React, { Component } from 'react';
+
 import { Scatter } from 'react-chartjs-2';
 import MultiSlider from "multi-slider";
 
+
 class Chart extends Component {
-  _sliderChange = (data) => {
-    this.props.onSliderChange(data)
+  state = {
+    sliderValues: this.props.sliderValues,
+  }
+
+  componentWillMount() {
+    this._handleSliderChange = debounce((data) => {
+      this.props.onSliderChange(data)
+    }, 1500)
+  }
+
+  _sliderChange = (nextSliderValues) => {
+    this.setState({
+      sliderValues: nextSliderValues,
+     })
+    this._handleSliderChange(nextSliderValues)
   }
 
   _getElementAtEvent = (elements) => {
@@ -118,14 +135,18 @@ class Chart extends Component {
         />
 
         <MultiSlider
+          trackSize={1}
+          handleSize={3}
+          handleStrokeSize={1}
+          handleInnerDotSize={1}
           onChange={this._sliderChange}
-          values={this.props.sliderValues}
+          values={this.state.sliderValues}
         />
 
         <div className="slider-legend">
-          {this.props.sliderValues[0] * 100} Kč
+          {this.state.sliderValues[0] * 100} Kč
            -
-          {this.props.sliderValues[1] * 100} Kč
+          {this.state.sliderValues[1] * 100} Kč
         </div>
       </div>
     );

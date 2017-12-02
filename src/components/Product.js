@@ -41,7 +41,7 @@ class Product extends Component {
     }
 
     const similarProducts = ProductUtils.getSimilarProducts(this.props.data)
-    // console.log(thisProduct, similarProducts)
+    console.log(this.props.data)
 
     return (
       <div className="product">

@@ -27,14 +27,13 @@ export default class ProductUtils {
     return data.results.map((result) => {
       const resultProduct = result['Product']
 
-      console.log(result['IsBase'])
-
       return {
         base: result['IsBase'],
         y: result['Score'],
         x: resultProduct['PRICE_VAT'],
         id: resultProduct['PRODUCTNO'],
         title: resultProduct['PRODUCTNAME'],
+        // TODO: add these from result['ProCons']
         pros: [ '+ adv1', '+ adv2', '+ adv3' ],
         cons: [ '- con1', '- con2', '- con3' ],
         pointBackgroundColor: (result['IsBase']) ? 'red' : 'black',
