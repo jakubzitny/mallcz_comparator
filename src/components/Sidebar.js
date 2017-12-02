@@ -1,14 +1,13 @@
 import debounce from 'lodash/debounce'
 
 import React, { Component } from 'react';
-import { Header, Menu } from 'semantic-ui-react';
+import { Button, Header, Menu } from 'semantic-ui-react';
 import { Slider } from 'antd';
 import 'antd/lib/slider/style/css';
 
 const SLIDER_OPTIONS = {
   'min': 0,
   'max': 1,
-  // 'defaultValue': 0.5,
   'step': 0.01,
   'tipFormatter': null,
   'range': false,
@@ -16,15 +15,9 @@ const SLIDER_OPTIONS = {
 
 class Sidebar extends Component {
   state = {
-    slidersX: {
-      '0': { id: 'Dotykový displej', value: 0.5 },
-      '1': { id: 'Procesor', value: 0.5 },
-      '2': { id: 'Frekvence', value: 0.5 },
-      '3': { id: 'Podsvícená klávesnice', value: 0.5 },
-      '4': { id: 'Čtečka otisků prstů', value: 0.5 }
-    },
-    sliders: this.props.params, // ParamUtils.formatParams(this.props.params)
+    sliders: this.props.params,
     timestamp: null,
+    showShowMoreButton: true
   };
 
   componentWillMount() {
@@ -43,12 +36,17 @@ class Sidebar extends Component {
     });
 
     // this._handleParamChange(sliders)
-    setTimeout(() => {
+    setTimeout(() => {
       const now = Date.now()
       if (now - this.state.timestamp > 200) {
         this.props.onParamChange(sliders)
       }
     }, 200)
+  };
+
+  onShowMoreParametersButtonClick() {
+    console.log('clicked');
+    this.setState({ showShowMoreButton: false });
   };
 
   render() {
@@ -62,16 +60,28 @@ class Sidebar extends Component {
           paddingBottom: '1em',
           overflowY: 'scroll',
         }}>
-          {Object.keys(this.state.sliders).map((index) =>
-            <Menu.Item key={index}>
-              <Header size='tiny' textAlign='center'>{this.state.sliders[index].id}</Header>
-              <Slider
-                value={this.state.sliders[index].value}
-                onChange={this.onSliderChange.bind(this, index)}
-                {...SLIDER_OPTIONS}
-              />
-            </Menu.Item>
-          )}
+          <Menu.Item>
+            <Header size='medium' textAlign='center'>Moje preference</Header>
+          </Menu.Item>
+          {Object.keys(this.state.sliders)
+            .filter((key) => this.state.showShowMoreButton ? key < 5 : key)
+            .map((index) =>
+              <Menu.Item key={index}>
+                <Header size='tiny' textAlign='center'>{this.state.sliders[index].id}</Header>
+                <Slider
+                  value={this.state.sliders[index].value}
+                  onChange={this.onSliderChange.bind(this, index)}
+                  {...SLIDER_OPTIONS}
+                />
+              </Menu.Item>
+            )}
+          {this.state.showShowMoreButton &&
+          <Menu.Item>
+            <Button basic color='blue' onClick={this.onShowMoreParametersButtonClick.bind(this)}>
+              Zobrazit více parametrů
+            </Button>
+          </Menu.Item>
+          }
         </Menu>
       </div>
     );
