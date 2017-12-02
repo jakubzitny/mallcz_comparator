@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
 import request from 'request'
+
+import React, { Component } from 'react';
 
 import '../App.css';
 
 import Container from './Container';
 import Loading from './Loading';
+
+import ParamUtils from '../utils/param-utils'
+
 
 export default class App extends Component {
   state = {
@@ -13,7 +17,8 @@ export default class App extends Component {
       1,
       70,
       20
-    ]
+    ],
+    paramValues: null,
   }
 
   componentDidMount() {
@@ -23,7 +28,16 @@ export default class App extends Component {
   _fetchAndSetData() {
     this._fetchData()
       .then((data) => {
-        this.setState({ data })
+        const top3 = [
+          data.results[0],
+          data.results[1],
+          data.results[2],
+        ].map((r) => r.Score)
+        console.log('setting state', top3)
+        this.setState({
+          data,
+          paramValues: ParamUtils.formatParams(data['params']),
+        })
       })
       .catch((error) => {
         console.error(error)
@@ -46,7 +60,8 @@ export default class App extends Component {
       PriceRange: {
         from: this.state.sliderValues[0] * 100,
         to: this.state.sliderValues[1] * 100,
-      }
+      },
+      UserPrefs: ParamUtils.formatUserPrefs(this.state.paramValues),
     }
   }
 
@@ -98,6 +113,13 @@ export default class App extends Component {
     this._fetchAndSetData()
   }
 
+  _handleParamChange = (newParamValues) => {
+    this.setState({
+      paramValues: newParamValues,
+    })
+    this._fetchAndSetData()
+  }
+
   render() {
     if (!this.state.data) {
       return (
@@ -110,8 +132,10 @@ export default class App extends Component {
         {/* <ProductSearch /> */}
         <Container
           data={this.state.data}
+          paramValues={this.state.paramValues}
           sliderValues={this.state.sliderValues}
           onSliderChange={this._handleSliderChange}
+          onParamChange={this._handleParamChange}
         />
       </div>
     );

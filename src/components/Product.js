@@ -16,6 +16,12 @@ class Product extends Component {
     error: null,
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      chartData: ProductUtils.getChartData(nextProps.data),
+    })
+  }
+
   handleChange = (e, { checked, value }) => {
     const nextCheckboxes = this.state.checkedCheckboxes;
     nextCheckboxes[value] = checked;

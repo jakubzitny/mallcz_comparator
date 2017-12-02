@@ -15,14 +15,17 @@ class Container extends Component {
     const nextCheckboxes = this.state.checkedCheckboxes;
     nextCheckboxes[value] = checked;
     this.setState({
-      checkedCheckboxes: nextCheckboxes
+      checkedCheckboxes: nextCheckboxes,
     });
   };
 
   render() {
     return (
       <div className="container">
-        <Sidebar />
+        <Sidebar
+          params={ this.props.paramValues }
+          onParamChange={ this.props.onParamChange }
+        />
 
         <div className="product-content-container">
           <Product
