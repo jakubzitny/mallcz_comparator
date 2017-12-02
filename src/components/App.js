@@ -50,7 +50,6 @@ export default class App extends Component {
     }
   }
 
-
   _fetchData() {
     // const URL = 'http://5.153.61.109:5000/msb/getproduct?productid=1027636001'
     const URL = 'http://5.153.61.109:5000/msb/getscore'
