@@ -26,12 +26,6 @@ export default class App extends Component {
   _fetchAndSetData() {
     this._fetchData()
       .then((data) => {
-        const top3 = [
-          data.results[0],
-          data.results[1],
-          data.results[2],
-        ].map((r) => r.Score)
-        console.log('setting state', top3)
         const filteredData = DataUtils.filterDataByPrice(data, this.state.sliderValues)
         this.setState({
           data: filteredData,
