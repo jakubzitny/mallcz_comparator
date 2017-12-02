@@ -24,6 +24,7 @@ class Sidebar extends Component {
       '4': { id: 'Čtečka otisků prstů', value: 0.5 }
     },
     sliders: this.props.params, // ParamUtils.formatParams(this.props.params)
+    timestamp: null,
   };
 
   componentWillMount() {
@@ -36,9 +37,18 @@ class Sidebar extends Component {
     const sliders = Object.assign({}, this.state.sliders);
     sliders[sliderIndex].value = sliderValue;
 
-    this.setState({ sliders });
+    this.setState({
+      sliders,
+      timeout: Date.now(),
+    });
 
-    this._handleParamChange(sliders)
+    // this._handleParamChange(sliders)
+    setTimeout(() => {
+      const now = Date.now()
+      if (now - this.state.timestamp > 200) {
+        this.props.onParamChange(sliders)
+      }
+    }, 200)
   };
 
   render() {

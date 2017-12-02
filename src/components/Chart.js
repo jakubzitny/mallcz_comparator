@@ -12,6 +12,7 @@ const MAX_PRICE = 100000;
 class Chart extends Component {
   state = {
     sliderValues: this.props.sliderValues,
+    timestamp: null,
   };
 
   componentWillMount() {
@@ -23,8 +24,15 @@ class Chart extends Component {
   _sliderChange = (nextSliderValues) => {
     this.setState({
       sliderValues: nextSliderValues,
+      timestamp: Date.now(),
     });
-    this._handleSliderChange(nextSliderValues)
+    // this._handleSliderChange(nextSliderValues)
+    setTimeout(() => {
+      const now = Date.now()
+      if (now - this.state.timestamp > 200) {
+        this.props.onSliderChange(nextSliderValues)
+      }
+    }, 200)
   };
 
   _getElementAtEvent = (elements) => {
@@ -150,8 +158,8 @@ class Chart extends Component {
           <Slider
             range
             min={0}
-            max={MAX_PRICE}
-            defaultValue={[0, MAX_PRICE]}
+            max={ MAX_PRICE }
+            defaultValue={[ 0, MAX_PRICE ]}
             marks={{
               0: { label: '0 Kč' },
               100000: { label: '100 000 Kč' }
