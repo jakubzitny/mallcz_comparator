@@ -8,8 +8,16 @@ class Chart extends Component {
   }
 
   _getElementAtEvent = (elements) => {
+    if (!elements.length) {
+      return
+    }
+
     const element = elements[0]
     const dat = this.props.data[element._index]
+
+    if (!dat) {
+      return
+    }
 
     // TODO: State, call prop fc.
     document.location.href = dat.id
@@ -23,14 +31,16 @@ class Chart extends Component {
             labels: ['Scatter'],
             datasets: [
               {
-                label: 'My First dataSet',
-                fill: false,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                pointBorderColor: 'rgba(75,192,192,1)',
-                pointBackgroundColor: '#fff',
-                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
-                data: this.props.data
+                // label: 'My First dataSet',
+                // fill: true,
+                // backgroundColor: 'rgba(75,192,192,0.4)',
+                // pointBorderColor: 'rgba(75,192,192,1)',
+                // pointBackgroundColor: '#fff',
+                // pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                // pointHoverBorderColor: 'rgba(220,220,220,1)',
+                data: this.props.data,
+                pointBackgroundColor: this.props.data.map((x) => x.pointBackgroundColor),
+                pointRadius: this.props.data.map((x) => x.pointRadius),
               }
             ]
           }}
@@ -41,11 +51,34 @@ class Chart extends Component {
             responsive: true,
             tooltips: {
               callbacks: {
-                label: (tooltipItem, data) => {
-                  // console.log(tooltipItem, data)
+                beforeLabel: (tooltipItem, data) => {
                   const dataset = data.datasets[0].data
+                  const item = dataset[tooltipItem.index]
+                  return item.pros.join('\n')
+                },
+                afterLabel: (tooltipItem, data) => {
+                  const dataset = data.datasets[0].data
+                  const item = dataset[tooltipItem.index]
+                  return item.cons.join('\n')
+                },
+                label: (tooltipItem, data) => {
+                  return ''
+                },
+                beforeTitle: (tooltipItems, data) => {
+                  const dataset = data.datasets[0].data
+                  const index = tooltipItems[0].index
+                  const item = dataset[index]
 
-                  return dataset[tooltipItem.index].id
+                  return `${item.title} (${item.x} Kč)`
+                },
+                afterTitle: (tooltipItem, data) => {
+                  return ''
+                },
+                beforeBody: () => {
+                  return ''
+                },
+                afterBody: () => {
+                  return '(Click to open)'
                 }
               },
             },
@@ -88,6 +121,7 @@ class Chart extends Component {
           onChange={this._sliderChange}
           values={this.props.sliderValues}
         />
+
         <div className="slider-legend">
           {this.props.sliderValues[0] * 100} Kč
            -
