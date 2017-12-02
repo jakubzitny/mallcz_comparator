@@ -32,8 +32,9 @@ export default class App extends Component {
           data.results[2],
         ].map((r) => r.Score)
         console.log('setting state', top3)
+        const filteredData = DataUtils.filterDataByPrice(data, this.state.sliderValues)
         this.setState({
-          data: DataUtils.filterDataByPrice(data, this.state.sliderValues),
+          data: filteredData,
           paramValues: ParamUtils.formatParams(data['params']),
         })
       })
