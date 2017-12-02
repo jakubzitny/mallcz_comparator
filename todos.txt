@@ -1,0 +1,6 @@
+
+- batch request on slider change / debounce
+- sidebar send preffered data
+- color ticks
+- improve tooltips
+- improve the whole layout
