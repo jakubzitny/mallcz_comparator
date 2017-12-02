@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
-import { Checkbox, Header, Menu } from 'semantic-ui-react';
+import { Header, Menu } from 'semantic-ui-react';
+import { Slider } from 'antd';
+import 'antd/lib/slider/style/css';
 
+const SLIDER_OPTIONS = {
+  'min': 0,
+  'max': 1,
+  // 'defaultValue': 0.5,
+  'step': 0.01,
+  'tipFormatter': null
+};
 
 class Sidebar extends Component {
   state = {
-    checkedCheckboxes: {
-      'nfc': false,
-      'dual-sim': true
+    sliders: {
+      '0': { id: 'Dotykový displej', value: 0.5 },
+      '1': { id: 'Procesor', value: 0.5 },
+      '2': { id: 'Frekvence', value: 0.5 },
+      '3': { id: 'Podsvícená klávesnice', value: 0.5 },
+      '4': { id: 'Čtečka otisků prstů', value: 0.5 }
     }
   };
 
-  handleChange = (e, { checked, value }) => {
-    const nextCheckboxes = this.state.checkedCheckboxes;
-    nextCheckboxes[value] = checked;
-    this.setState({
-      checkedCheckboxes: nextCheckboxes
-    });
+  onSliderAfterChange = (sliderIndex, sliderValue) => {
+    console.log(sliderIndex);
+    console.log(sliderValue);
+    const sliders = this.state.sliders;
+    sliders[sliderIndex].value = sliderValue;
+
+    this.setState({ sliders });
   };
 
   render() {
@@ -30,31 +43,19 @@ class Sidebar extends Component {
           overflowY: 'scroll',
         }}>
           <Menu.Item>
-            <Header size='medium' textAlign='center'>Samsung Galaxy J3, Dual SIM (2016),
-              zlatý</Header>
+            <Header size='medium' textAlign='center'>Samsung Galaxy J3, Dual SIM (2016)</Header>
           </Menu.Item>
 
-          <Menu.Item>
-            <Checkbox
-              toggle
-              label='NFC'
-              value='nfc'
-              name='checkboxToggleGroup'
-              checked={this.state.checkedCheckboxes['nfc']}
-              onChange={this.handleChange}
-            />
-          </Menu.Item>
-
-          <Menu.Item>
-            <Checkbox
-              toggle
-              label='DualSim'
-              value='dual-sim'
-              name='checkboxToggleGroup'
-              checked={this.state.checkedCheckboxes['dual-sim']}
-              onChange={this.handleChange}
-            />
-          </Menu.Item>
+          {Object.keys(this.state.sliders).map((index) =>
+            <Menu.Item key={index}>
+              <Header size='tiny' textAlign='center'>{this.state.sliders[index].id}</Header>
+              <Slider
+                value={this.state.sliders[index].value}
+                onAfterChange={this.onSliderAfterChange.bind(this, index)}
+                {...SLIDER_OPTIONS}
+              />
+            </Menu.Item>
+          )}
         </Menu>
       </div>
     );

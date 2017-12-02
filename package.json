@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^2.13.10",
     "chart.js": "^2.7.1",
     "faker": "^4.1.0",
     "lodash": "^4.17.4",

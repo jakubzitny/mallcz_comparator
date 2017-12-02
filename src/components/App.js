@@ -55,7 +55,7 @@ export default class App extends Component {
     const URL = 'http://5.153.61.109:5000/msb/getscore'
     const uri = window.location.pathname
     const productId = uri.replace('/', '')
-    const dummyRequest = this._getRequest(productId)
+    const dummyRequest = this._getDummyRequest()
 
     return new Promise((resolve, reject) => {
       const requestOptions = {
