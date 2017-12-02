@@ -32,7 +32,7 @@ class Sidebar extends Component {
     }, 1500)
   }
 
-  onSliderAfterChange = (sliderIndex, sliderValue, x) => {
+  onSliderChange = (sliderIndex, sliderValue, x) => {
     const sliders = Object.assign({}, this.state.sliders);
     sliders[sliderIndex].value = sliderValue;
 
@@ -57,7 +57,7 @@ class Sidebar extends Component {
               <Header size='tiny' textAlign='center'>{this.state.sliders[index].id}</Header>
               <Slider
                 value={this.state.sliders[index].value}
-                onChange={this.onSliderAfterChange.bind(this, index)}
+                onChange={this.onSliderChange.bind(this, index)}
                 {...SLIDER_OPTIONS}
               />
             </Menu.Item>
