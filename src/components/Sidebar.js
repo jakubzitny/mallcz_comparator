@@ -43,7 +43,7 @@ class Sidebar extends Component {
           overflowY: 'scroll',
         }}>
           <Menu.Item>
-            <Header size='medium' textAlign='center'>Samsung Galaxy J3, Dual SIM (2016)</Header>
+            <Header size='medium'>Samsung Galaxy J3, Dual SIM (2016)</Header>
           </Menu.Item>
 
           {Object.keys(this.state.sliders).map((index) =>
