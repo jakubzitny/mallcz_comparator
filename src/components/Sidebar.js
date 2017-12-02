@@ -39,7 +39,7 @@ class Sidebar extends Component {
 
     this.setState({
       sliders,
-      timeout: Date.now(),
+      timestamp: Date.now(),
     });
 
     // this._handleParamChange(sliders)
