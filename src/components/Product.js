@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Chart from './Chart';
 
 import ProductUtils from '../utils/product-utils'
-import { Container, Header, Image, Segment } from 'semantic-ui-react';
+import { Container, Header, Image } from 'semantic-ui-react';
 
 class Product extends Component {
   state = {

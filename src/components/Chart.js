@@ -77,6 +77,8 @@ class Chart extends Component {
               }
             },
             tooltips: {
+              xPadding: 15,
+              yPadding: 15,
               callbacks: {
                 beforeLabel: (tooltipItem, data) => {
                   const dataset = data.datasets[0].data;
@@ -89,7 +91,7 @@ class Chart extends Component {
                   return item.cons
                 },
                 label: (tooltipItem, data) => {
-                  return ''
+                  // return ''
                 },
                 beforeTitle: (tooltipItems, data) => {
                   const dataset = data.datasets[0].data;
@@ -105,7 +107,7 @@ class Chart extends Component {
                   return ''
                 },
                 afterBody: () => {
-                  return ''
+                  // return ''
                 }
               },
             },

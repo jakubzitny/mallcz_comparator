@@ -7,7 +7,7 @@ export default class ParamUtils {
 
     return params
       .filter((param) => {
-        const [ id, type ] = param
+        const [ type ] = param
 
         return (type !== 'UP')
       })
