@@ -24,6 +24,10 @@ export default class ProductUtils {
   }
 
   static getChartData(data) {
+    if (!data || !data.results || !data.results.length) {
+      return []
+    }
+
     return data.results.map((result) => {
       const resultProduct = result['Product']
 

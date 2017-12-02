@@ -8,7 +8,7 @@ export default class Footer extends Component {
         <div className="foot-left">
         <h3>Accessories</h3>
         {
-          this.props.thisProduct['ACCESSORY'].map((accessory) => {
+          this.props.thisProduct['ACCESSORY'] && this.props.thisProduct['ACCESSORY'].map((accessory) => {
             return (
               <span key={accessory}>
                 <a href={ accessory }>{accessory}</a><br />
