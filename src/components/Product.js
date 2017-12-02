@@ -37,7 +37,7 @@ class Product extends Component {
       <div className="product">
         <span>{thisProduct['CATEGORYTEXT']}</span>
         <div className='product-header'>
-          <Container clearing>
+          <Container>
             <Header as='h1' floated='right' color='red'>
               {ProductUtils.formatPriceNumber(thisProduct['PRICE_VAT'])}
             </Header>

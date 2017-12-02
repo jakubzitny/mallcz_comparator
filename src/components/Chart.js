@@ -69,6 +69,13 @@ class Chart extends Component {
           options={{
             onClick: this._handleClick,
             responsive: true,
+            hover: {
+              onHover: function (e) {
+                const point = this.getElementAtEvent(e);
+                if (point.length) e.target.style.cursor = 'pointer';
+                else e.target.style.cursor = 'default';
+              }
+            },
             tooltips: {
               callbacks: {
                 beforeLabel: (tooltipItem, data) => {
@@ -89,7 +96,7 @@ class Chart extends Component {
                   const index = tooltipItems[0].index
                   const item = dataset[index]
 
-                  return `${item.title} (${item.x} Kč)`
+                  return `${item.title} (${ProductUtils.formatPriceNumber(item.x)})`
                 },
                 afterTitle: (tooltipItem, data) => {
                   return ''
@@ -97,9 +104,9 @@ class Chart extends Component {
                 beforeBody: () => {
                   return ''
                 },
-                afterBody: () => {
-                  return '(Click to open)'
-                }
+                // afterBody: () => {
+                //   return '(Click to open)'
+                // }
               },
             },
             scales: {
