@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
 import { Scatter } from 'react-chartjs-2';
 import { Slider } from 'antd';
-import { Divider, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import ProductUtils from '../utils/product-utils';
 
 const MAX_PRICE = 100000;

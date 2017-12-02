@@ -35,7 +35,7 @@ export default class ProductUtils {
         id: resultProduct['PRODUCTNO'],
         title: resultProduct['PRODUCTNAME'],
         ...ProductUtils.getProsAndConsFromDiff(result['Diff']),
-        pointBackgroundColor: (result['IsBase']) ? 'red' : 'black',
+        pointBackgroundColor: (result['IsBase']) ? '#db2828' : '#49a9ee',
         pointRadius: (result['IsBase']) ? 6 : 3,
       }
     })
