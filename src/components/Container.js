@@ -25,7 +25,11 @@ class Container extends Component {
         <Sidebar />
 
         <div className="product-content-container">
-          <Product />
+          <Product
+            data={ this.props.data }
+            sliderValues={ this.props.sliderValues }
+            onSliderChange={ this.props.onSliderChange }
+          />
         </div>
       </div>
     );

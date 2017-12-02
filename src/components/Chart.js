@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import { Scatter } from 'react-chartjs-2';
+import MultiSlider from "multi-slider";
 
 class Chart extends Component {
+  _sliderChange = (data) => {
+    this.props.onSliderChange(data)
+  }
+
+  _handleClick = (x) => {
+    const chart = document.getElementsByClassName('chartjs-render-monitor')[0]
+  }
+
+  _getElementAtEvent = (elements) => {
+    const element = elements[0]
+    const dat = this.props.data[element._index]
+
+    // TODO: State.
+    document.location.href = dat.id
+  }
+
   render() {
     return (
       <div className="chart">
@@ -15,21 +32,28 @@ class Chart extends Component {
                 backgroundColor: 'rgba(75,192,192,0.4)',
                 pointBorderColor: 'rgba(75,192,192,1)',
                 pointBackgroundColor: '#fff',
-                // pointBorderWidth: 1,
-                // pointHoverRadius: 5,
                 pointHoverBackgroundColor: 'rgba(75,192,192,1)',
                 pointHoverBorderColor: 'rgba(220,220,220,1)',
-                // pointHoverBorderWidth: 2,
-                // pointRadius: 1,
-                // pointHitRadius: 10,
                 data: this.props.data
               }
             ]
           }}
-          getElementAtEvent={this.getElementAtEvent}
+          onClick={this._handleClick}
+          getElementAtEvent={this._getElementAtEvent}
           legend={{ display: false }}
           options={{
+            onClick: this._handleClick,
             responsive: true,
+            tooltips: {
+              callbacks: {
+                label: (tooltipItem, data) => {
+                  // console.log(tooltipItem, data)
+                  const dataset = data.datasets[0].data
+
+                  return dataset[tooltipItem.index].id
+                }
+              },
+            },
             scales: {
               xAxes: [
                 {
@@ -64,6 +88,16 @@ class Chart extends Component {
             }
           }}
         />
+
+        <MultiSlider
+          onChange={this._sliderChange}
+          values={this.props.sliderValues}
+        />
+        <div className="slider-legend">
+          {this.props.sliderValues[0] * 100} Kč
+           -
+          {this.props.sliderValues[1] * 100} Kč
+        </div>
       </div>
     );
   }

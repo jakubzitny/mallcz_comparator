@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import Chart from './Chart';
 
+import ProductUtils from '../utils/product-utils'
+
+
 class Product extends Component {
   state = {
     checkedCheckboxes: {
       'nfc': false,
       'dual-sim': true
     },
-    chartData: [
-      { x: 65, y: 75 },
-      { x: 59, y: 49 },
-      { x: 80, y: 90 },
-      { x: 81, y: 29 },
-      { x: 56, y: 36 },
-      { x: 55, y: 25 },
-      { x: 40, y: 18 },
-    ]
+    chartData: ProductUtils.getChartData(this.props.data),
+    error: null,
   };
 
   handleChange = (e, { checked, value }) => {
@@ -26,25 +22,78 @@ class Product extends Component {
     });
   };
 
-  randomizeChartData = () => {
-    this.setState({
-      chartData: [
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() },
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() },
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() },
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() },
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() },
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() },
-        { x: (Math.random() * 10000).toFixed(2), y: Math.random() }
-      ]
-    })
-  };
+  _getBaseProduct() {
+    try {
+      return ProductUtils.getBaseProduct(this.props.data)
+    } catch (e) {
+      return e.message
+    }
+  }
 
   render() {
+    const thisProduct = this._getBaseProduct()
+    if (typeof thisProduct === 'string') {
+      return (
+        <div>{ thisProduct }</div>
+      )
+    }
+
+    const similarProducts = ProductUtils.getSimilarProducts(this.props.data)
+    console.log(thisProduct, similarProducts)
+
     return (
       <div className="product">
-        <div className="product-content-container">
-          <Chart data={this.state.chartData} />
+        <div>
+          <span>
+            <a href={thisProduct['URL']}>mall.cz</a>
+          </span>
+        </div>
+        <span>{ thisProduct['CATEGORYTEXT'] }</span>
+        <h1>{ thisProduct['PRODUCTNAME'] }</h1>
+        <div>
+          <div>
+            <img src={thisProduct['IMGURL']} alt={thisProduct['PRODUCTNAME']}/>
+          </div>
+          <br />
+          <div>
+            <Chart
+              data={this.state.chartData}
+              sliderValues={ this.props.sliderValues }
+              onSliderChange={ this.props.onSliderChange }
+            />
+          </div>
+        </div>
+
+
+        <br />
+        <br />
+        <br />
+        <div className="footwrapper">
+          <div className="foot-left">
+          <h3>Accessories</h3>
+          {
+            thisProduct['ACCESSORY'].map((accessory) => {
+              return (
+                <span key={accessory}>
+                  <a href={ accessory }>{accessory}</a><br />
+                </span>
+              )
+            })
+          }
+          </div>
+          <div className="foot-right">
+          <h3>Similar products</h3>
+          {
+            similarProducts.map((product) => {
+              const productData = product['Product']
+              return (
+                <span key={productData['PRODUCTNO']}>
+                  <a href={ productData['PRODUCTNO'] }>{ productData['PRODUCT'] } ( { productData['PRICE_VAT'] } )</a><br />
+                </span>
+              )
+            })
+          }
+          </div>
         </div>
       </div>
     );

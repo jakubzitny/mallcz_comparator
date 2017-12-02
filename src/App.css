@@ -14,3 +14,23 @@
 .chart-canvas {
 
 }
+
+.loading {
+    text-align: center;
+}
+
+.footwrapper {
+    display: flex;
+}
+
+.foot-left {
+    flex: 0 0 35%;
+}
+
+.foot-right {
+    flex: 1;
+}
+
+.slider-legend {
+    text-align: center;
+}
