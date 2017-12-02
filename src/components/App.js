@@ -6,8 +6,8 @@ import '../App.css';
 import Container from './Container';
 import Loading from './Loading';
 
-import ParamUtils from '../utils/param-utils'
-
+import DataUtils from '../utils/data-utils';
+import ParamUtils from '../utils/param-utils';
 
 export default class App extends Component {
   state = {
@@ -33,7 +33,7 @@ export default class App extends Component {
         ].map((r) => r.Score)
         console.log('setting state', top3)
         this.setState({
-          data,
+          data: DataUtils.filterDataByPrice(data, this.state.sliderValues),
           paramValues: ParamUtils.formatParams(data['params']),
         })
       })
