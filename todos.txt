@@ -1,7 +1,9 @@
 
-- batch request on slider change / debounce
 - sidebar send preffered data
-- color ticks
-- improve tooltips
+
+- osekať price data
+
+- deployment to web
+
 - improve the whole layout
 
