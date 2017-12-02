@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
 import Chart from './Chart';
-import Footer from './Footer';
 
 import ProductUtils from '../utils/product-utils'
-
+import { Container, Header, Image, Segment } from 'semantic-ui-react';
 
 class Product extends Component {
   state = {
@@ -34,23 +33,21 @@ class Product extends Component {
       )
     }
 
-    const similarProducts = ProductUtils.getSimilarProducts(this.props.data);
-    console.log(this.props.data);
-
     return (
       <div className="product">
-        <div>
-          <span>
-            <a href={thisProduct['URL']}>mall.cz</a>
-          </span>
-        </div>
         <span>{thisProduct['CATEGORYTEXT']}</span>
-        <h1>{`${thisProduct['PRODUCTNAME']} (${thisProduct['PRICE_VAT']} Kč)`}</h1>
+        <div className='product-header'>
+          <Container clearing>
+            <Header as='h1' floated='right' color='red'>
+              {ProductUtils.formatPriceNumber(thisProduct['PRICE_VAT'])}
+            </Header>
+            <Header as='h1' floated='left'>
+              <Image src={thisProduct['IMGURL']} />
+              {' '}{`${thisProduct['PRODUCTNAME']}`}
+            </Header>
+          </Container>
+        </div>
         <div>
-          <div>
-            <img src={thisProduct['IMGURL']} alt={thisProduct['PRODUCTNAME']} />
-          </div>
-          <br />
           <div>
             <Chart
               data={this.state.chartData}
@@ -59,11 +56,6 @@ class Product extends Component {
             />
           </div>
         </div>
-
-        <Footer
-          thisProduct={thisProduct}
-          similarProducts={similarProducts}
-        />
       </div>
     );
   }

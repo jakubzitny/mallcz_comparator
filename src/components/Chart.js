@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
 import { Scatter } from 'react-chartjs-2';
 import { Slider } from 'antd';
-import { Header } from 'semantic-ui-react';
+import { Divider, Header } from 'semantic-ui-react';
+import ProductUtils from '../utils/product-utils';
 
 const MAX_PRICE = 100000;
 
@@ -43,10 +44,6 @@ class Chart extends Component {
   };
 
   render() {
-    function formatPriceNumber(number) {
-      return`${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} Kč`;
-    }
-
     return (
       <div className="chart">
         <Scatter
@@ -140,25 +137,26 @@ class Chart extends Component {
           }}
         />
 
-        <Slider
-          range
-          min={0}
-          max={MAX_PRICE}
-          defaultValue={[0, MAX_PRICE]}
-          marks={{
-            0: { label: '0 Kč' },
-            100000: { label: '100 000 Kč' }
-          }}
-          tipFormatter={formatPriceNumber}
-          onChange={this._sliderChange}
-          value={this.state.sliderValues}
-        />
-
-        <Header size='tiny' textAlign='center'>Rozsah ceny</Header>
-        <div className="slider-legend">
-          {formatPriceNumber(this.state.sliderValues[0])}
-          {" - "}
-          {formatPriceNumber(this.state.sliderValues[1])}
+        <div className='slider-container'>
+          <Slider
+            range
+            min={0}
+            max={MAX_PRICE}
+            defaultValue={[0, MAX_PRICE]}
+            marks={{
+              0: { label: '0 Kč' },
+              100000: { label: '100 000 Kč' }
+            }}
+            tipFormatter={ProductUtils.formatPriceNumber}
+            onChange={this._sliderChange}
+            value={this.state.sliderValues}
+          />
+          <Header size='tiny' textAlign='center'>Rozsah ceny</Header>
+          <div className="price-slider-legend">
+            {ProductUtils.formatPriceNumber(this.state.sliderValues[0])}
+            {" - "}
+            {ProductUtils.formatPriceNumber(this.state.sliderValues[1])}
+          </div>
         </div>
 
       </div>

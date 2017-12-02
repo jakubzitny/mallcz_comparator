@@ -1,5 +1,9 @@
 
 export default class ProductUtils {
+  static formatPriceNumber(number) {
+    return`${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} Kč`;
+  }
+
   static getBaseProduct(data) {
     if (!data.results || !data.results.length) {
       throw new Error('No results.')
@@ -14,13 +18,6 @@ export default class ProductUtils {
     }
 
     return result['Product']
-  }
-
-  static getSimilarProducts(data) {
-    return data.results
-      .filter((result) => {
-        return !result['IsBase']
-      })
   }
 
   static getChartData(data) {
