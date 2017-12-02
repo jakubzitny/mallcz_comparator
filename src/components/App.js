@@ -1,6 +1,5 @@
-import request from 'request'
-
 import React, { Component } from 'react';
+import request from 'request'
 
 import '../App.css';
 
@@ -14,12 +13,11 @@ export default class App extends Component {
   state = {
     data: null,
     sliderValues: [
-      1,
-      70,
-      20
+      0,
+      100000,
     ],
-    paramValues: null,
-  }
+    paramValues: null
+  };
 
   componentDidMount() {
     this._fetchAndSetData()
@@ -58,10 +56,10 @@ export default class App extends Component {
     return {
       ProdId: productId,
       PriceRange: {
-        from: this.state.sliderValues[0] * 100,
-        to: this.state.sliderValues[1] * 100,
+        from: this.state.sliderValues[0],
+        to: this.state.sliderValues[1],
       },
-      UserPrefs: ParamUtils.formatUserPrefs(this.state.paramValues),
+      UserPrefs: ParamUtils.formatUserPrefs(this.state.paramValues)
     }
   }
 
@@ -109,9 +107,9 @@ export default class App extends Component {
   _handleSliderChange = (newSliderValues) => {
     this.setState({
       sliderValues: newSliderValues,
-    })
+    });
     this._fetchAndSetData()
-  }
+  };
 
   _handleParamChange = (newParamValues) => {
     this.setState({

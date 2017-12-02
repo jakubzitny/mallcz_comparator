@@ -1,15 +1,17 @@
-import debounce from 'lodash/debounce'
-
 import React, { Component } from 'react';
-
+import debounce from 'lodash/debounce';
 import { Scatter } from 'react-chartjs-2';
-import MultiSlider from "multi-slider";
+import { Slider } from 'antd';
+import { Header } from 'semantic-ui-react';
 
+const MAX_PRICE = 100000;
+
+// #88c7f4
 
 class Chart extends Component {
   state = {
     sliderValues: this.props.sliderValues,
-  }
+  };
 
   componentWillMount() {
     this._handleSliderChange = debounce((data) => {
@@ -20,9 +22,9 @@ class Chart extends Component {
   _sliderChange = (nextSliderValues) => {
     this.setState({
       sliderValues: nextSliderValues,
-     })
+    });
     this._handleSliderChange(nextSliderValues)
-  }
+  };
 
   _getElementAtEvent = (elements) => {
     if (!elements.length) {
@@ -38,9 +40,13 @@ class Chart extends Component {
 
     // TODO: State, call prop fc.
     document.location.href = dat.id
-  }
+  };
 
   render() {
+    function formatPriceNumber(number) {
+      return`${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} Kč`;
+    }
+
     return (
       <div className="chart">
         <Scatter
@@ -134,20 +140,27 @@ class Chart extends Component {
           }}
         />
 
-        <MultiSlider
-          trackSize={1}
-          handleSize={3}
-          handleStrokeSize={1}
-          handleInnerDotSize={1}
+        <Slider
+          range
+          min={0}
+          max={MAX_PRICE}
+          defaultValue={[0, MAX_PRICE]}
+          marks={{
+            0: { label: '0 Kč' },
+            100000: { label: '100 000 Kč' }
+          }}
+          tipFormatter={formatPriceNumber}
           onChange={this._sliderChange}
-          values={this.state.sliderValues}
+          value={this.state.sliderValues}
         />
 
+        <Header size='tiny' textAlign='center'>Rozsah ceny</Header>
         <div className="slider-legend">
-          {this.state.sliderValues[0] * 100} Kč
-           -
-          {this.state.sliderValues[1] * 100} Kč
+          {formatPriceNumber(this.state.sliderValues[0])}
+          {" - "}
+          {formatPriceNumber(this.state.sliderValues[1])}
         </div>
+
       </div>
     );
   }

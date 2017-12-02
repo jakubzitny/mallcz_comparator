@@ -7,7 +7,6 @@
     "chart.js": "^2.7.1",
     "faker": "^4.1.0",
     "lodash": "^4.17.4",
-    "multi-slider": "^4.0.0",
     "react": "^16.1.1",
     "react-chartjs-2": "^2.6.4",
     "react-dom": "^16.1.1",
