@@ -79,24 +79,24 @@ class Chart extends Component {
             tooltips: {
               callbacks: {
                 beforeLabel: (tooltipItem, data) => {
-                  const dataset = data.datasets[0].data
-                  const item = dataset[tooltipItem.index]
-                  return item.pros.join('\n')
+                  const dataset = data.datasets[0].data;
+                  const item = dataset[tooltipItem.index];
+                  return item.pros.concat('');
                 },
                 afterLabel: (tooltipItem, data) => {
-                  const dataset = data.datasets[0].data
-                  const item = dataset[tooltipItem.index]
-                  return item.cons.join('\n')
+                  const dataset = data.datasets[0].data;
+                  const item = dataset[tooltipItem.index];
+                  return item.cons
                 },
                 label: (tooltipItem, data) => {
                   return ''
                 },
                 beforeTitle: (tooltipItems, data) => {
-                  const dataset = data.datasets[0].data
-                  const index = tooltipItems[0].index
-                  const item = dataset[index]
+                  const dataset = data.datasets[0].data;
+                  const index = tooltipItems[0].index;
+                  const item = dataset[index];
 
-                  return `${item.title} (${ProductUtils.formatPriceNumber(item.x)})`
+                  return [item.title, '', ProductUtils.formatPriceNumber(item.x)];
                 },
                 afterTitle: (tooltipItem, data) => {
                   return ''
@@ -104,9 +104,9 @@ class Chart extends Component {
                 beforeBody: () => {
                   return ''
                 },
-                // afterBody: () => {
-                //   return '(Click to open)'
-                // }
+                afterBody: () => {
+                  return ''
+                }
               },
             },
             scales: {
