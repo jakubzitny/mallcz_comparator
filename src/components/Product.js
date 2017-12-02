@@ -8,10 +8,6 @@ import ProductUtils from '../utils/product-utils'
 
 class Product extends Component {
   state = {
-    checkedCheckboxes: {
-      'nfc': false,
-      'dual-sim': true
-    },
     chartData: ProductUtils.getChartData(this.props.data),
     error: null,
   };
@@ -21,14 +17,6 @@ class Product extends Component {
       chartData: ProductUtils.getChartData(nextProps.data),
     })
   }
-
-  handleChange = (e, { checked, value }) => {
-    const nextCheckboxes = this.state.checkedCheckboxes;
-    nextCheckboxes[value] = checked;
-    this.setState({
-      checkedCheckboxes: nextCheckboxes
-    });
-  };
 
   _getBaseProduct() {
     try {
@@ -42,12 +30,12 @@ class Product extends Component {
     const thisProduct = this._getBaseProduct()
     if (typeof thisProduct === 'string') {
       return (
-        <div>{ thisProduct }</div>
+        <div>{thisProduct}</div>
       )
     }
 
-    const similarProducts = ProductUtils.getSimilarProducts(this.props.data)
-    console.log(this.props.data)
+    const similarProducts = ProductUtils.getSimilarProducts(this.props.data);
+    console.log(this.props.data);
 
     return (
       <div className="product">
@@ -56,18 +44,18 @@ class Product extends Component {
             <a href={thisProduct['URL']}>mall.cz</a>
           </span>
         </div>
-        <span>{ thisProduct['CATEGORYTEXT'] }</span>
-        <h1>{ `${thisProduct['PRODUCTNAME']} (${thisProduct['PRICE_VAT']} Kč)` }</h1>
+        <span>{thisProduct['CATEGORYTEXT']}</span>
+        <h1>{`${thisProduct['PRODUCTNAME']} (${thisProduct['PRICE_VAT']} Kč)`}</h1>
         <div>
           <div>
-            <img src={thisProduct['IMGURL']} alt={thisProduct['PRODUCTNAME']}/>
+            <img src={thisProduct['IMGURL']} alt={thisProduct['PRODUCTNAME']} />
           </div>
           <br />
           <div>
             <Chart
               data={this.state.chartData}
-              sliderValues={ this.props.sliderValues }
-              onSliderChange={ this.props.onSliderChange }
+              sliderValues={this.props.sliderValues}
+              onSliderChange={this.props.onSliderChange}
             />
           </div>
         </div>
