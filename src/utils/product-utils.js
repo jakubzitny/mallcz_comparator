@@ -37,12 +37,28 @@ export default class ProductUtils {
         x: resultProduct['PRICE_VAT'],
         id: resultProduct['PRODUCTNO'],
         title: resultProduct['PRODUCTNAME'],
-        // TODO: add these from result['ProCons']
-        pros: [ '+ adv1', '+ adv2', '+ adv3' ],
-        cons: [ '- con1', '- con2', '- con3' ],
+        ...ProductUtils.getProsAndConsFromDiff(result['Diff']),
         pointBackgroundColor: (result['IsBase']) ? 'red' : 'black',
         pointRadius: (result['IsBase']) ? 6 : 3,
       }
     })
+  }
+
+  static getProsAndConsFromDiff(diff) {
+    if (!diff) {
+      return {}
+    }
+
+    const pros = diff.pros && diff.pros.map((pro) => {
+      return `+ ${pro.reason}`
+    })
+    const cons = diff.cons && diff.cons.map((con) => {
+      return `- ${con.reason}`
+    })
+
+    return {
+      pros,
+      cons,
+    }
   }
 }

@@ -5,8 +5,6 @@ import { Header, Menu } from 'semantic-ui-react';
 import { Slider } from 'antd';
 import 'antd/lib/slider/style/css';
 
-import ParamUtils from '../utils/param-utils'
-
 const SLIDER_OPTIONS = {
   'min': 0,
   'max': 1,

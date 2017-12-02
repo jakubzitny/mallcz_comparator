@@ -1,8 +1,4 @@
 
-- sidebar send preffered data
-
-- osekať price data
-
 - deployment to web
 
 - improve the whole layout
