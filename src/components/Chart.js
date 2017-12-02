@@ -7,15 +7,11 @@ class Chart extends Component {
     this.props.onSliderChange(data)
   }
 
-  _handleClick = (x) => {
-    const chart = document.getElementsByClassName('chartjs-render-monitor')[0]
-  }
-
   _getElementAtEvent = (elements) => {
     const element = elements[0]
     const dat = this.props.data[element._index]
 
-    // TODO: State.
+    // TODO: State, call prop fc.
     document.location.href = dat.id
   }
 
@@ -38,7 +34,6 @@ class Chart extends Component {
               }
             ]
           }}
-          onClick={this._handleClick}
           getElementAtEvent={this._getElementAtEvent}
           legend={{ display: false }}
           options={{
